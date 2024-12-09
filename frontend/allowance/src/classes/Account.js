@@ -1,9 +1,9 @@
 class Account {
     constructor(accountName, pin, userId, userType, pictureUrl, currentBalance) {
-        this.accountName = accountName; // The name of the account holder
-        this.pin = pin;                 // The account's PIN
-        this.userId = userId;           // Unique identifier for the user
-        this.userType = userType;       // Type of user (e.g., "parent", "child", etc.)
+        this.accountName = accountName; 
+        this.pin = pin;                 
+        this.userId = userId;           
+        this.userType = userType;       
         this.pictureUrl = pictureUrl;
         this.currentBalance = currentBalance;
     }
@@ -13,7 +13,6 @@ class Account {
         return this.pin === inputPin;
     }
 
-    // Display the user's role
     getUserRole() {
         return `This account belongs to a ${this.userType}`;
     }
@@ -26,7 +25,6 @@ class Account {
         };
     }
 
-    //How you might format account information for display
     getAccountInfo() {
         return `Account Name: ${this.accountName}\nUser ID: ${this.userId}\nUser Type: ${this.userType}`;
     }
