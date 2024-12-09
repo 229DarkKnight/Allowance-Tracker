@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "./card"; // Import the Card component
-import './cardGrid.css'; // Import the grid styles
+import Card from "./card"; 
+import './cardGrid.css'; 
 
 const CardGrid = ({ items }) => {
     return (
