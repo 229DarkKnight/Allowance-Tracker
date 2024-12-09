@@ -8,17 +8,16 @@ class Account {
         this.currentBalance = currentBalance;
     }
 
-    // Method to check if a given PIN is correct
+    // Check if a given PIN is correct
     validatePin(inputPin) {
         return this.pin === inputPin;
     }
 
-    // Method to display the user's role
+    // Display the user's role
     getUserRole() {
         return `This account belongs to a ${this.userType}`;
     }
 
-    // Method to anonymize sensitive data (useful for logs or display)
     anonymize() {
         return {
             accountName: this.accountName,
@@ -27,7 +26,7 @@ class Account {
         };
     }
 
-    // Example of how you might format account information for display
+    //How you might format account information for display
     getAccountInfo() {
         return `Account Name: ${this.accountName}\nUser ID: ${this.userId}\nUser Type: ${this.userType}`;
     }
