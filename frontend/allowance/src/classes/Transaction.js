@@ -3,11 +3,10 @@ class Transaction {
         this.amount = amount;
         this.childName = childName;
         this.reason = reason;
-        this.timestamp = new Date(timestamp); // Ensure it's a Date object
+        this.timestamp = new Date(timestamp); 
         this.type = type;
         this.userId = userId;
 
-        // Check if timestamp is a valid Date object
         if (isNaN(this.timestamp)) {
             throw new Error("Invalid timestamp format");
         }
