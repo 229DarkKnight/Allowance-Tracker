@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import './card.css';
+import { useNavigate } from "react-router-dom";
 
-const Card = ({ name, status, pictureUrl }) => {
+const Card = ({ name, status, pictureUrl, correctPin }) => {
     const [isPinVisible, setIsPinVisible] = useState(false);
     const [pin, setPin] = useState("");
+    const navigate = useNavigate();
 
     const handleCardClick = () => {
-        setIsPinVisible(true); // Show the PIN input when the card is clicked
+        setIsPinVisible(true);
     };
 
     const handlePinChange = (e) => {
-        const numericValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-        setPin(numericValue); // Update the PIN value
+        const numericValue = e.target.value.replace(/\D/g, "");
+        setPin(numericValue);
     };
 
     const handlePinSubmit = (e) => {
         e.preventDefault();
-        if (pin === "1234") { // Replace "1234" with your actual PIN logic
-            alert("PIN correct!");
+        if (pin === correctPin) {
             setIsPinVisible(false);
+            if (status === 'Parent') {
+                navigate('/adminDashboard', { 
+                    state: { 
+                        name: name, 
+                        status: status, 
+                        pictureUrl: pictureUrl 
+                    } 
+                });
+            } else {
+                navigate('/childTransactionList', { 
+                    state: { 
+                        name: name, 
+                        status: status, 
+                        pictureUrl: pictureUrl 
+                    } 
+                });
+            }
         } else {
             alert("Incorrect PIN!");
         }
