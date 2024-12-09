@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route('/get-users', methods=['GET'])
 def get_data():
-    collection_name = request.args.get('collection', 'profile')  # Pass collection name as query param
+    collection_name = request.args.get('collection', 'profile')  
     docs = db.collection(collection_name).stream()
     data = {doc.id: doc.to_dict() for doc in docs}
     return jsonify(data)
@@ -47,13 +47,11 @@ def add_profile():
         # Get data from the request
         data = request.json
         
-        # Validate required fields
         required_fields = ['name', 'pin', 'balance', 'userType', 'userId']
         for field in required_fields:
             if field not in data:
                 return jsonify({"error": f"Missing required field: {field}"}), 400
         
-        # Prepare the profile document
         profile = {
             'name': data['name'],
             'pin': data['pin'],
@@ -61,9 +59,6 @@ def add_profile():
             'userType': data['userType'],
             'userId': data['userId'],
         }
-        
-        # Add the profile to Firestore
-        # This will create a new document each time, allowing multiple profiles per userId
         doc_ref = db.collection('profile').add(profile)
         
         return jsonify({
@@ -78,12 +73,10 @@ def add_profile():
 @app.route('/delete-profile', methods=['DELETE'])
 def delete_profile():
     try:
-        # Get the 'name' and 'userId' from the request JSON body
         data = request.json
         name = data.get('name')
         user_id = data.get('userId')
 
-        # Validate required fields
         if not name or not user_id:
             return jsonify({"error": "Missing 'name' or 'userId' in request body"}), 400
 
@@ -93,7 +86,6 @@ def delete_profile():
                  .where('userId', '==', user_id) \
                  .stream()
 
-        # Collect matching documents
         found = False
         for doc in docs:
             found = True
@@ -297,21 +289,17 @@ def get_user_transactions():
 @app.route('/get-profile', methods=['GET'])
 def get_profile():
     try:
-        # Get the 'name' and 'userId' from the request JSON body
         name = request.args.get('name')
         user_id = request.args.get('userId')
 
-        # Validate required fields
         if not name or not user_id:
             return jsonify({"error": "Missing 'name' or 'userId' in request body"}), 400
 
-        # Query Firestore for the document matching 'name' and 'userId'
         docs = db.collection('profile') \
                  .where('name', '==', name) \
                  .where('userId', '==', user_id) \
                  .stream()
 
-        # Collect matching documents
         profile = None
         for doc in docs:
             profile = doc.to_dict()
